@@ -100,6 +100,6 @@ function App() {
 }
 
 export default App;
-//npm install
-//npm start
+//명령창에서 npm install 설치하고 npm start 하면 실행됩니다
+
 // cd calendar-app하고 npm start
