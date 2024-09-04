@@ -100,4 +100,6 @@ function App() {
 }
 
 export default App;
+//npm install
+//npm start
 // cd calendar-app하고 npm start
