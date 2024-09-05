@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>팝업 테스트</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        .popup {
+            display: none; /* 처음에는 숨김 */
+            position: absolute; /* 팝업 위치 고정 */
+            z-index: 10;
+            width: 80%;
+            max-width: 500px;
+            background-color: #fff;
+            border: 1px solid #888;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .popup-content {
+            text-align: center;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .popup-image {
+            max-width: 100%;
+            height: auto; /* 이미지 비율 유지 */
+            cursor: pointer;
+        }
+
+        .popup-header {
+            cursor: move; /* 드래그 가능한 부분 */
+            background-color: #f1f1f1;
+            padding: 10px;
+            font-weight: bold;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <h1>최강 3조 ㅋ</h1>
+
+    <!-- 첫 번째 팝업창 -->
+    <div id="popup1" class="popup" style="top: 100px; left: 100px;">
+        <div class="popup-header" id="popup1-header">안 전 제 일</div>
+        <div class="popup-content">
+            <span class="close" id="close-popup1">&times;</span>
+            <a href="https://www.youtube.com/watch?v=IDOhu_cfG_Q" target="_blank">
+                <img class="popup-image" src="save.jpg" alt="첫 번째 팝업 이미지">
+            </a>
+            <p>첫째도 안전 둘째도 안전!!!매일 출근후 안전수칙 영상 필수 시청</p>
+        </div>
+    </div>
+
+    <!-- 두 번째 팝업창 -->
+    <div id="popup2" class="popup" style="top: 100px; left: 700px;">
+        <div class="popup-header" id="popup2-header">삼성중공업 2024 하반기 채용시작!!!</div>
+        <div class="popup-content">
+            <span class="close" id="close-popup2">&times;</span>
+            <a href="https://www.samsungcareers.com/" target="_blank">
+                <img class="popup-image" src="chae.jpg" alt="두 번째 팝업 이미지">
+            </a>
+            <p>이미지를 클릭시 해당 웹사이트로 이동합니다.</p>
+        </div>
+    </div>
+
+    <script>
+        // 팝업 드래그 기능
+        function makeDraggable(popup, header) {
+            let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+
+            header.onmousedown = dragMouseDown;
+
+            function dragMouseDown(e) {
+                e = e || window.event;
+                e.preventDefault();
+
+                // 마우스 포인터 위치 초기화
+                pos3 = e.clientX;
+                pos4 = e.clientY;
+
+                document.onmouseup = closeDragElement;
+                document.onmousemove = elementDrag;
+            }
+
+            function elementDrag(e) {
+                e = e || window.event;
+                e.preventDefault();
+
+                // 마우스 이동 거리 계산
+                pos1 = pos3 - e.clientX;
+                pos2 = pos4 - e.clientY;
+                pos3 = e.clientX;
+                pos4 = e.clientY;
+
+                // 팝업창의 위치 조정
+                popup.style.top = (popup.offsetTop - pos2) + "px";
+                popup.style.left = (popup.offsetLeft - pos1) + "px";
+            }
+
+            function closeDragElement() {
+                document.onmouseup = null;
+                document.onmousemove = null;
+            }
+        }
+
+        window.onload = function() {
+            const popup1 = document.getElementById('popup1');
+            const closePopup1 = document.getElementById('close-popup1');
+            const header1 = document.getElementById('popup1-header');
+
+            const popup2 = document.getElementById('popup2');
+            const closePopup2 = document.getElementById('close-popup2');
+            const header2 = document.getElementById('popup2-header');
+
+            // 첫 번째 팝업 보이기
+            popup1.style.display = 'block';
+            makeDraggable(popup1, header1);
+
+            // 두 번째 팝업 보이기
+            popup2.style.display = 'block';
+            makeDraggable(popup2, header2);
+
+            // 첫 번째 팝업 닫기
+            closePopup1.onclick = function() {
+                popup1.style.display = 'none';
+            };
+
+            // 두 번째 팝업 닫기
+            closePopup2.onclick = function() {
+                popup2.style.display = 'none';
+            };
+        };
+    </script>
+</body>
+</html>
