@@ -20,10 +20,16 @@ app.get("/", (req, res) => {
 
 // 로그인 처리
 app.post("/login", (req, res) => {
-  const { username, password } = req.body;
+  const { username, password, rememberMe } = req.body; // rememberMe 추가
   const user = users.find((u) => u.username === username);
 
   if (user && bcrypt.compareSync(password, user.password)) {
+    // rememberMe 체크 여부 확인
+    if (rememberMe) {
+      console.log("로그인 상태 유지 옵션 선택됨.");
+      // 여기서 쿠키나 세션 설정을 해도 됨 (이 예제에서는 생략)
+    }
+
     res.render("home", { username }); // 로그인 성공 시 홈 화면으로 이동
   } else {
     res.render("login", { error: "아이디 또는 비밀번호가 올바르지 않습니다." });
