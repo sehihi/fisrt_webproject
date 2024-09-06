@@ -5,43 +5,165 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Graph Visualization</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+      h1 {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      #myPieChart {
+        display: flex;
+        width: 50%;
+        height: 50%;
+      }
+      #detailPieChart {
+        display: flex;
+        width: 50%;
+        height: 50%;
+      }
+      #detailChart {
+        display: flex;
+        width: 50%;
+        height: 50%;
+      }
+    </style>
   </head>
   <body>
-    <canvas id="myChart" width="400" height="200"></canvas>
+    <h1>사유코드 설명 파이 차트</h1>
+    <canvas id="myPieChart"></canvas>
+    <canvas id="detailPieChart" style="display: none"></canvas>
+    <canvas id="detailChart" style="display: none"></canvas>
+    <!-- 상세 차트는 처음엔 숨김 -->
+
     <script>
-      // 서버에서 데이터 가져오기
-      fetch("/data")
+      let myPieChart;
+      let detailPieChart;
+      let detailChart;
+
+      // /status-data API로부터 데이터 가져오기
+      fetch("/status-data2")
         .then((response) => response.json())
         .then((data) => {
-          // 데이터를 그래프에 맞게 변환
-          const labels = data.map((row) => row.프로젝트); // 예시: '프로젝트' 열 사용
-          const values = data.map((row) => row.검사길이); // 예시: '검사길이' 열 사용
+          const ctx = document.getElementById("myPieChart").getContext("2d");
 
-          // Chart.js로 그래프 그리기
-          const ctx = document.getElementById("myChart").getContext("2d");
-          const myChart = new Chart(ctx, {
-            type: "bar", // 막대 그래프
-            data: {
-              labels: labels, // x축
-              datasets: [
-                {
-                  label: "검사길이",
-                  data: values, // y축 데이터
-                  backgroundColor: "rgba(75, 192, 192, 0.2)",
-                  borderColor: "rgba(75, 192, 192, 1)",
-                  borderWidth: 1,
-                },
-              ],
-            },
+          const chartData = {
+            labels: ["정상", "불량"],
+            datasets: [
+              {
+                data: [data.정상, data.불량],
+                backgroundColor: ["#36A2EB", "#FF6384"],
+                hoverBackgroundColor: ["#36A2EB", "#FF6384"],
+              },
+            ],
+          };
+
+          myPieChart = new Chart(ctx, {
+            type: "pie",
+            data: chartData,
             options: {
-              scales: {
-                y: {
-                  beginAtZero: true,
-                },
+              responsive: false,
+              onClick: (evt, activeElements) => {
+                if (activeElements.length > 0) {
+                  const datasetIndex = activeElements[0].datasetIndex;
+                  const index = activeElements[0].index;
+                  const label = myPieChart.data.labels[index];
+
+                  if (label === "불량") {
+                    // 불량 항목을 클릭했을 때 상세 사유 데이터 가져오기
+                    fetch("/fault-details")
+                      .then((response) => response.json())
+                      .then((detailData) => {
+                        const detailCtx = document
+                          .getElementById("detailPieChart")
+                          .getContext("2d");
+                        const labels = detailData.map(
+                          (item) => item["사유코드설명"]
+                        );
+                        const counts = detailData.map((item) => item.count);
+
+                        // 기존 차트가 있으면 삭제
+                        if (detailPieChart) detailPieChart.destroy();
+
+                        // 상세 차트 생성
+                        detailPieChart = new Chart(detailCtx, {
+                          type: "pie",
+                          data: {
+                            labels: labels,
+                            datasets: [
+                              {
+                                data: counts,
+                                backgroundColor: [
+                                  "#FF9F40",
+                                  "#FF6384",
+                                  "#36A2EB",
+                                  "#4BC0C0",
+                                  "#4BC0FF",
+                                ],
+                              },
+                            ],
+                          },
+                          options: {
+                            responsive: false,
+                            onClick: (evt, ActiveElements) => {
+                              if (ActiveElements.length > 0) {
+                                const index = ActiveElements[0].index;
+                                const clickedLabel =
+                                  detailPieChart.data.labels[index];
+
+                                // 선택한 사유코드 설명에 따른 선종 데이터를 로드
+                                loadDetailChart(clickedLabel);
+                              }
+                            },
+                          },
+                        });
+
+                        // 상세 차트를 보여줌
+                        document.getElementById(
+                          "detailPieChart"
+                        ).style.display = "block";
+                      });
+                  }
+                }
               },
             },
           });
         });
+      // 선택한 사유코드 설명에 따른 선종 데이터를 가져와서 막대그래프로 출력
+      function loadDetailChart(reasonCode) {
+        fetch(`/detail-data/${reasonCode}`)
+          .then((response) => response.json())
+          .then((detailData) => {
+            const detailCtx = document
+              .getElementById("detailChart")
+              .getContext("2d");
+            const detailLabels = detailData.map((item) => item["선종"]); // 선종 데이터
+            const detailCounts = detailData.map((item) => item.count); // 선종별 count
+
+            if (detailChart) {
+              detailChart.destroy(); // 기존 차트가 있으면 제거
+            }
+
+            detailChart = new Chart(detailCtx, {
+              type: "bar",
+              data: {
+                labels: detailLabels,
+                datasets: [
+                  {
+                    data: detailCounts,
+                    backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
+                  },
+                ],
+              },
+              options: {
+                responsive: false,
+              },
+            });
+
+            // 상세 차트를 화면에 표시
+            document.getElementById("detailChart").style.display = "block";
+          });
+      }
     </script>
   </body>
 </html>
