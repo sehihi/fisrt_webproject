@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>실시간 알림</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        #alerts {
+            margin: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+        }
+        .alert {
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            background-color: #e6f7ff;
+        }
+    </style>
+</head>
+<body>
+    <h1>실시간 뉴스 알림</h1>
+    <div id="alerts">
+        <h2>알림:</h2>
+    </div>
+
+    <script>
+        const socket = io();
+
+        // 서버로부터 새로운 데이터 수신
+        socket.on('newData', (data) => {
+            const alertsDiv = document.getElementById('alerts');
+            const alertElement = document.createElement('div');
+            alertElement.classList.add('alert');
+            alertElement.innerHTML = `
+                <strong>제목:</strong> ${data.title}<br>
+                <strong>설명:</strong> ${data.description}<br>
+                <strong>발행일:</strong> ${data.pubDate}
+            `;
+            alertsDiv.appendChild(alertElement);
+        });
+    </script>
+</body>
+</html>
