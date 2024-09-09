@@ -1,38 +1,93 @@
+/* 전체 페이지 스타일 */
 .App {
   text-align: center;
   margin: 0 auto;
   max-width: 900px;
+  font-family: "Noto Sans KR", sans-serif; /* 산세리프체 사용 */
+  color: #333;
 }
 
-main {
-  margin-bottom: 20px;
+/* 캘린더 컨테이너 */
+.fullcalendar-container {
+  margin: 20px auto;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: #f9f9f9; /* 부드러운 배경 색상 */
 }
 
+/* To-Do 리스트 컨테이너 */
 .todo-list-container {
   background-color: #ffffff;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  margin-top: 20px; /* 달력과 To-Do List 사이의 간격 조정 */
+  margin-top: 20px;
 }
 
+/* 제목 스타일 */
 .todo-list-container h2 {
-  font-size: 24px; /* To-Do List 제목을 더 크게 */
-  font-weight: bold; /* 제목을 굵게 */
-  margin-bottom: 10px; /* 제목과 날짜 사이의 간격 */
+  font-size: 20px; /* 제목 크기 조정 */
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
 }
 
+/* 날짜 스타일 */
 .todo-list-container h3 {
-  font-size: 20px; /* 날짜 텍스트 크기 조정 */
-  margin-bottom: 15px; /* 날짜와 내용 사이의 간격 */
+  font-size: 18px;
+  color: #555;
+  margin-bottom: 15px;
 }
 
+/* 목록 스타일 */
 .todo-list-container ul {
-  list-style-type: disc; /* 목록 스타일을 동그라미로 */
-  padding-left: 20px; /* 목록 아이템 들여쓰기 */
+  list-style-type: none; /* 점 대신에 아이콘 사용 */
+  padding-left: 0;
 }
 
 .todo-list-container li {
-  font-size: 16px; /* 목록 아이템의 텍스트 크기 조정 */
-  color: #333; /* 텍스트 색상 조정 */
+  font-size: 16px;
+  color: #333;
+  margin: 5px 0;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #f1f1f1; /* 항목 배경 색상 */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.todo-list-container li input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+.todo-list-container button {
+  background-color: #4caf50; /* 버튼 색상 */
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.todo-list-container button:hover {
+  background-color: #45a049; /* 버튼 호버 색상 */
+}
+
+/* 일정 카드 스타일 */
+.fc-event {
+  border-radius: 5px;
+  background-color: #4caf50; /* 일정 카드 배경 색상 */
+  color: white;
+  padding: 5px;
+}
+
+.fc-daygrid-day-number {
+  font-weight: bold;
+}
+
+.fc-daygrid-day-frame {
+  border-radius: 5px;
+  overflow: hidden;
 }

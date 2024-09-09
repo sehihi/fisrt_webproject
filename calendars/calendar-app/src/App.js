@@ -9,7 +9,10 @@ function App() {
   const [events, setEvents] = useState([]);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [todoTasks, setTodoTasks] = useState([]);
+  const [editingTaskId, setEditingTaskId] = useState(null);
+  const [newTitle, setNewTitle] = useState("");
 
+  // Handle date click on calendar
   const handleDateClick = (arg) => {
     setSelectedDate(new Date(arg.dateStr)); // Update selected date
     const title = prompt("일정 제목을 입력하세요:");
@@ -23,12 +26,35 @@ function App() {
     }
   };
 
+  // Handle checkbox change to edit tasks
   const handleCheckboxChange = (id) => {
     setTodoTasks(
       todoTasks.map((task) =>
         task.id === id ? { ...task, checked: !task.checked } : task
       )
     );
+  };
+
+  // Update the task title
+  const handleUpdateTask = () => {
+    if (editingTaskId && newTitle) {
+      const updatedTasks = todoTasks.map((task) =>
+        task.id === editingTaskId ? { ...task, title: newTitle } : task
+      );
+      setTodoTasks(updatedTasks);
+
+      const updatedEvents = events.map((event) =>
+        event.title ===
+          todoTasks.find((task) => task.id === editingTaskId).title &&
+        event.date === selectedDate.toISOString().split("T")[0]
+          ? { ...event, title: newTitle }
+          : event
+      );
+      setEvents(updatedEvents);
+
+      setEditingTaskId(null);
+      setNewTitle("");
+    }
   };
 
   // Filter tasks for the selected date
@@ -57,6 +83,25 @@ function App() {
     );
   };
 
+  // Handle event click (optional)
+  const handleEventClick = (info) => {
+    alert("Event: " + info.event.title);
+  };
+
+  // Navigate to previous date
+  const handlePrevDate = () => {
+    const newDate = new Date(selectedDate);
+    newDate.setDate(newDate.getDate() - 1);
+    setSelectedDate(newDate);
+  };
+
+  // Navigate to next date
+  const handleNextDate = () => {
+    const newDate = new Date(selectedDate);
+    newDate.setDate(newDate.getDate() + 1);
+    setSelectedDate(newDate);
+  };
+
   return (
     <div className="App">
       <div className="fullcalendar-container">
@@ -65,6 +110,7 @@ function App() {
           initialView="dayGridMonth"
           events={events}
           dateClick={handleDateClick}
+          eventClick={handleEventClick} // Optional: Handle event click
           locales={[koLocale]}
           locale="ko"
         />
@@ -73,6 +119,22 @@ function App() {
       <div className="todo-list-container" style={{ marginTop: "20px" }}>
         <h2>To-Do List</h2>
         <h3>{formatDateToKorean(selectedDate)}</h3>
+        <button onClick={handlePrevDate}>이전 날짜</button>
+        <button onClick={handleNextDate}>다음 날짜</button>
+
+        {/* Edit Task UI */}
+        {editingTaskId && (
+          <div style={{ marginBottom: "10px" }}>
+            <input
+              type="text"
+              value={newTitle}
+              onChange={(e) => setNewTitle(e.target.value)}
+              placeholder="새로운 제목 입력"
+            />
+            <button onClick={handleUpdateTask}>일정 변경하기</button>
+          </div>
+        )}
+
         <ul>
           {todayTasks.length > 0 ? (
             todayTasks.map((task) => (
@@ -83,10 +145,18 @@ function App() {
                   onChange={() => handleCheckboxChange(task.id)}
                 />
                 {task.checked ? <s>{task.title}</s> : task.title}
+                <button
+                  onClick={() => {
+                    setEditingTaskId(task.id);
+                    setNewTitle(task.title);
+                  }}
+                >
+                  수정
+                </button>
               </li>
             ))
           ) : (
-            <li>오늘의 일정이 없습니다.</li>
+            <li>일정이 없습니다.</li>
           )}
         </ul>
         {todayTasks.length > 0 && (
@@ -100,6 +170,3 @@ function App() {
 }
 
 export default App;
-//명령창에서 npm install 설치하고 npm start 하면 실행됩니다
-
-// cd calendar-app하고 npm start
