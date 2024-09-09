@@ -1,4 +1,3 @@
-# fisrt_webproject
 # 아정
 
 1. 로그인/회원가입 화면
