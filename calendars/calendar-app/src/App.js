@@ -15,6 +15,7 @@ function App() {
   const [todoTasks, setTodoTasks] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalTitle, setModalTitle] = useState("");
+  const [modalContent, setModalContent] = useState("");
   const [currentDate, setCurrentDate] = useState(
     new Date().toISOString().split("T")[0]
   );
@@ -27,12 +28,14 @@ function App() {
   const handleModalClose = () => {
     setIsModalOpen(false);
     setModalTitle("");
+    setModalContent("");
   };
 
   const handleModalSubmit = () => {
     if (modalTitle) {
       const newEvent = {
         title: modalTitle,
+        content: modalContent,
         date: selectedDate.toISOString().split("T")[0],
       };
       const newEventWithId = { ...newEvent, id: new Date().getTime() };
@@ -50,15 +53,19 @@ function App() {
     setTodoTasks((prevTasks) => prevTasks.filter((task) => task.id !== id));
   };
 
-  const handleTaskUpdate = (id, newTitle) => {
+  const handleTaskUpdate = (id, newTitle, newContent) => {
     setEvents((prevEvents) =>
       prevEvents.map((event) =>
-        event.id === id ? { ...event, title: newTitle } : event
+        event.id === id
+          ? { ...event, title: newTitle, content: newContent }
+          : event
       )
     );
     setTodoTasks((prevTasks) =>
       prevTasks.map((task) =>
-        task.id === id ? { ...task, title: newTitle } : task
+        task.id === id
+          ? { ...task, title: newTitle, content: newContent }
+          : task
       )
     );
   };
@@ -87,17 +94,26 @@ function App() {
         onRequestClose={handleModalClose}
         contentLabel="일정 입력"
         className="modal"
-        overlayClassName="overlay"
+        overlayClassName="modal-overlay"
       >
-        <h2>일정 제목을 입력하세요</h2>
+        <h2>일정 제목과 내용을 입력하세요</h2>
         <input
           type="text"
           placeholder="제목"
           value={modalTitle}
           onChange={(e) => setModalTitle(e.target.value)}
         />
-        <button onClick={handleModalSubmit}>저장</button>
-        <button onClick={handleModalClose}>닫기</button>
+        <textarea
+          placeholder="내용"
+          value={modalContent}
+          onChange={(e) => setModalContent(e.target.value)}
+        />
+        <div className="modal-button-group">
+          <button onClick={handleModalSubmit}>저장</button>
+          <button className="close-button" onClick={handleModalClose}>
+            닫기
+          </button>
+        </div>
       </ReactModal>
 
       <ToDoList
