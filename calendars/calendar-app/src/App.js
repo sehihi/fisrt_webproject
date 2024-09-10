@@ -1,11 +1,9 @@
+// App.js
 import React, { useState } from "react";
-import FullCalendar from "@fullcalendar/react";
-import dayGridPlugin from "@fullcalendar/daygrid";
-import interactionPlugin from "@fullcalendar/interaction";
-import koLocale from "@fullcalendar/core/locales/ko";
+import Calendar from "./Calendar";
+import ToDoList from "./ToDoList";
 import ReactModal from "react-modal";
 import "./App.css";
-import ToDoList from "./ToDoList";
 
 ReactModal.setAppElement("#root");
 
@@ -78,16 +76,7 @@ function App() {
 
   return (
     <div className="App">
-      <div className="fullcalendar-container">
-        <FullCalendar
-          plugins={[dayGridPlugin, interactionPlugin]}
-          initialView="dayGridMonth"
-          events={events}
-          dateClick={handleDateClick}
-          locales={[koLocale]}
-          locale="ko"
-        />
-      </div>
+      <Calendar events={events} handleDateClick={handleDateClick} />
 
       <ReactModal
         isOpen={isModalOpen}
