@@ -24,6 +24,17 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
+    <script>
+      function calculateDDay() {
+        const startDate = new Date("2024-05-12");
+        const today = new Date();
+        const diffTime = Math.abs(today - startDate);
+        const dDay = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+        document.getElementById("dDay").innerText = dDay;
+      }
+
+      window.onload = calculateDDay;
+    </script>
     <style>
       h2 {
         font-family: "East Sea Dokdo", sans-serif;
@@ -42,10 +53,11 @@
       <br />
       <div class="d-flex justify-content-center text-center m-0 p-0">
         <div class="section text-center">
-          <h2>달성일</h2>
+          <h2>무사고 달성일</h2>
         </div>
         <div class="section text-center">
-          <h2 style="color: red"><%= dDay %></h2>
+          <h2 style="color: red" id="dDay"></h2>
+          <!-- 여기서 dDay를 동적으로 업데이트 -->
         </div>
         <div class="section text-center">
           <h2>일</h2>
