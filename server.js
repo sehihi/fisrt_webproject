@@ -53,11 +53,6 @@ app.post("/login", (req, res) => {
 
   const query = "SELECT * FROM users WHERE email = ?";
   db.query(query, [email], async (err, results) => {
-    if (err) {
-      console.error("데이터베이스 오류:", err);
-      return res.status(500).send("로그인 실패: 데이터베이스 오류");
-    }
-
     if (results.length > 0) {
       // 데이터베이스에서 가져온 해시된 비밀번호와 입력된 비밀번호 비교
       const comparison = await bcrypt.compare(password, results[0].password);
@@ -68,6 +63,10 @@ app.post("/login", (req, res) => {
       }
     } else {
       return res.status(404).send("사용자가 존재하지 않습니다.");
+    }
+    if (err) {
+      console.error("데이터베이스 오류:", err);
+      return res.status(500).send("로그인 실패: 데이터베이스 오류");
     }
   });
 });
