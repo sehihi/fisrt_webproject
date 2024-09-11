@@ -11,6 +11,7 @@ import Info from "./components/Info/Info";
 import LeftContainer from "./components/LeftContainer/LeftContainer";
 import RightContainer from "./components/RightContainer/RightContainer";
 import Login from "./components/Login/Login"; // 로그인 컴포넌트 임포트
+import Graph from "./components/GraphContainer/Graph";
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false); // 로그인 상태
@@ -36,7 +37,9 @@ const App = () => {
               <Menu setActiveMenu={() => {}} />
               <div className="main_content">
                 <Info />
-                <div className="content_container"></div>
+                <div className="content_container">
+                  <Graph />
+                </div>
               </div>
             </div>
           }

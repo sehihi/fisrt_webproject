@@ -2,6 +2,7 @@ const express = require("express");
 const mysql = require("mysql");
 const app = express();
 const path = require("path");
+const cors = require("cors");
 // MySQL 연결 설정
 const connection = mysql.createConnection({
   host: "localhost",
@@ -10,12 +11,30 @@ const connection = mysql.createConnection({
   database: "webproject",
 });
 
+app.use(
+  cors({
+    origin: "*", // 모든 출처 허용 옵션. true 를 써도 된다.
+  })
+);
+
+const port = 3000;
+
+app.set("view engine", "ejs");
+app.set("views", "./views");
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 // MySQL 연결
 connection.connect();
 
 app.use(express.static(path.join(__dirname, "public")));
 
 // API 엔드포인트: 데이터를 클라이언트로 전달
+
+app.get("/dashboard", (req, res) => {
+  res.render("dashboard");
+});
 
 app.get("/status-data2", (req, res) => {
   const query = `
@@ -81,3 +100,5 @@ app.get("/detail-data/:reasonCode", (req, res) => {
 app.listen(3000, () => {
   console.log("서버가 3000번 포트에서 실행 중입니다.");
 });
+
+module.exports = appl;

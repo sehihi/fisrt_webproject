@@ -71,6 +71,73 @@ app.post("/login", (req, res) => {
   });
 });
 
+// 그래프 시각화 부분 데이터 가져오기
+app.get("/status-data2", (req, res) => {
+  console.log("status-data2 요청 들어옴"); // 이 부분 추가
+  const query = `
+        SELECT
+          COUNT(CASE WHEN \`사유코드설명\` = '0' THEN 1 END) AS 정상,
+          COUNT(CASE WHEN \`사유코드설명\` != '0' THEN 1 END) AS 불량
+        FROM number5;
+      `;
+
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error("쿼리 오류: " + err);
+      res.status(500).send("서버 오류");
+      return;
+    }
+
+    // 결과 데이터를 JSON 형태로 클라이언트에 전달
+    res.json(results[0]); // 중복된 응답 제거
+  });
+});
+
+// 불량 데이터 상세 정보 가져오기
+app.get("/fault-details", (req, res) => {
+  console.log("status-data2 경로로 요청이 들어옴");
+  const query = `
+      SELECT \`사유코드설명\`, COUNT(*) AS count
+      FROM number5
+      WHERE \`사유코드설명\` != '0'
+      GROUP BY \`사유코드설명\`;
+    `;
+
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error("쿼리 오류: " + err);
+      res.status(500).send("서버 오류");
+      return;
+    }
+
+    res.json(results);
+  });
+});
+
+// 클릭한 사유코드 설명에 따른 선종 데이터를 반환하는 API
+app.get("/detail-data/:reasonCode", (req, res) => {
+  const reasonCode = req.params.reasonCode;
+  console.log(reasonCode); // 클릭된 사유코드 설명을 받음
+  const query = `
+    SELECT \`선종\`, COUNT(*) AS count 
+    FROM number5 
+    WHERE \`사유코드설명\` = ?
+    GROUP BY \`선종\`;
+  `;
+
+  db.query(query, [reasonCode], (err, results) => {
+    if (err) {
+      console.error("쿼리 오류: " + err);
+      res.status(500).send("서버 오류");
+      return;
+    }
+
+    res.json(results);
+
+    console.log(results); // 데이터를 클라이언트로 전송
+  });
+});
+
 // 서버 실행
 app.listen(3001, () => {
   console.log("서버가 3001 포트에서 실행 중입니다.");
