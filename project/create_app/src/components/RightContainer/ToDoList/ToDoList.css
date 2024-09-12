@@ -1,9 +1,112 @@
-.todo-list {
-  background-color: white;
-  width: 84%;
-  height: 30%;
-  margin-left: 5%;
-  margin-top: 3%;
-  border-radius: 10px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+/* ToDoList.css */
+
+.todo-item {
+  margin-bottom: 15px;
+}
+
+.todo-item .checkbox {
+  margin-right: 10px;
+}
+
+.todo-item .task-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.todo-item .task-content .title {
+  display: flex;
+  align-items: center;
+}
+
+.todo-item .task-content .title span {
+  margin-right: 10px;
+}
+
+.todo-item .task-content .description {
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+
+.todo-item .task-content .buttons {
+  display: flex;
+  gap: 5px;
+}
+
+/* Navigation section styles */
+.navigation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.navigation button {
+  background-color: #007bff;
+  border: none;
+  color: white;
+  padding: 0; /* 여백을 0으로 설정하여 배경 영역을 줄입니다. */
+  font-size: 16px;
+  cursor: pointer;
+  margin: 0 5px;
+  width: 30px; /* 버튼의 너비를 직접 설정합니다. */
+  height: 30px; /* 버튼의 높이를 직접 설정합니다. */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1; /* 버튼 내 텍스트와 버튼 영역 사이의 여백을 줄입니다. */
+}
+
+.navigation span {
+  font-size: 16px; /* Adjusted font size */
+  margin: 0 10px;
+}
+
+/* Edit input styles */
+.edit-input {
+  border: 1px solid #ccc;
+  padding: 5px;
+  border-radius: 4px;
+  font-size: 14px;
+  margin-right: 10px;
+  flex: 1;
+}
+
+.edit-textarea {
+  border: 1px solid #ccc;
+  padding: 5px;
+  border-radius: 4px;
+  font-size: 14px;
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 80px;
+}
+
+/* Button styles */
+.save-button,
+.cancel-button,
+.edit-button,
+.delete-button {
+  background-color: #007bff;
+  border: none;
+  color: white;
+  padding: 5px 10px;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.cancel-button {
+  background-color: #dc3545; /* Red color for cancel */
+}
+
+.save-button {
+  background-color: #28a745; /* Green color for save */
+}
+
+.edit-button {
+  background-color: #007bff;
+}
+
+.delete-button {
+  background-color: #dc3545; /* Red color for delete */
 }

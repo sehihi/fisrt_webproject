@@ -11,10 +11,43 @@ import Info from "./components/Info/Info";
 import LeftContainer from "./components/LeftContainer/LeftContainer";
 import RightContainer from "./components/RightContainer/RightContainer";
 import Login from "./components/Login/Login"; // 로그인 컴포넌트 임포트
+import Popup from "./components/RightContainer/Popup";
 // import Graph from "./components/GraphContainer/Graph";
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false); // 로그인 상태
+  const [tasks, setTasks] = useState([]);
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [showPopup, setShowPopup] = useState(false);
+  //  달력 기능 받는 부분
+
+  //**************************************************** */
+  const handleAddTask = (title, content) => {
+    setTasks([
+      ...tasks,
+      { id: Date.now(), date: selectedDate, title, content, completed: false },
+    ]);
+  };
+
+  const handleDateClick = (date) => {
+    setSelectedDate(date);
+    setShowPopup(true);
+  };
+
+  const handleClosePopup = () => {
+    setShowPopup(false);
+  };
+
+  const handleUpdateTask = (id, updatedTask) => {
+    setTasks(tasks.map((task) => (task.id === id ? updatedTask : task)));
+  };
+
+  const handleDeleteTask = (id) => {
+    setTasks(tasks.filter((task) => task.id !== id));
+  };
+
+  // ****************************************************
+
   return (
     <Router>
       <Routes>
@@ -63,6 +96,13 @@ const App = () => {
                   <RightContainer />
                 </div>
               </div>
+              {showPopup && (
+                <Popup
+                  onClose={handleClosePopup}
+                  onSave={handleAddTask}
+                  selectedDate={selectedDate}
+                />
+              )}
             </div>
           }
         />

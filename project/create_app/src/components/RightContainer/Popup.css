@@ -1,0 +1,65 @@
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  max-width: 400px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.popup h2 {
+  margin-bottom: 10px;
+}
+
+/* 제목 입력 칸 스타일 */
+.popup input {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 10px; /* 내부 여백 조정 */
+  font-size: 16px; /* 폰트 크기 조정 */
+  height: 40px; /* 높이 조정 */
+}
+
+/* 내용 입력 칸 스타일 */
+.popup textarea {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 10px; /* 내부 여백 조정 */
+  font-size: 16px; /* 폰트 크기 조정 */
+  height: 120px; /* 높이 조정 */
+  resize: vertical; /* 수직으로만 크기 조정 가능 */
+}
+
+.popup button {
+  padding: 8px 16px; /* 버튼 내부 여백 조정 */
+  font-size: 14px; /* 폰트 크기 조정 */
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 10px; /* 버튼 간 간격 */
+}
+
+.popup button.cancel {
+  background-color: #f44336; /* 취소 버튼 색상 */
+  color: white;
+}
+
+.popup button.save {
+  background-color: #4caf50; /* 저장 버튼 색상 */
+  color: white;
+}
+
+/* 버튼 너비를 줄이기 위해 추가 */
+.popup div {
+  display: flex;
+  justify-content: flex-end; /* 오른쪽 정렬 */
+}
+
+.popup button {
+  width: auto; /* 너비 자동 조정 */
+}
