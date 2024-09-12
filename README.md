@@ -1,7 +1,8 @@
 # fisrt_webproject
 ![image](https://github.com/user-attachments/assets/999c8810-c1cb-4038-b35e-91ff26fc5bc4)
 
-
+해야할거  
+각 div 패딩이랑 그래프 flex로 다시 구현 + 메뉴마다 그래프들 작성
 #REMIND
 
 1. 배너빼고 다 통합했습니다
