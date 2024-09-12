@@ -1,0 +1,27 @@
+* {
+  box-sizing: border-box;
+}
+
+.app_container {
+  display: flex;
+  height: 100vh;
+  /* 전체 화면 높이 */
+}
+
+.main_content {
+  display: flex;
+  flex-direction: column;
+  width: 89%;
+  /* 메뉴 외의 영역이 85% 차지 */
+  height: 100vh;
+  /* 전체 화면 높이 */
+}
+
+.content_container {
+  display: flex;
+  background-color: #F7F7F7;
+  height: 100vh;
+  /* 나머지 92% */
+  padding-top: 30px;
+  box-sizing: border-box;
+}

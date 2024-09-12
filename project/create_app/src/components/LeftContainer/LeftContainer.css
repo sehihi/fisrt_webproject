@@ -1,0 +1,81 @@
+/* row설정 */
+.row>* {
+  flex-grow: 1;
+  min-width: 0;
+}
+
+/* 왼쪽 컨텐츠 */
+.left_container {
+  width: 72%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-left: 50px;
+  box-sizing: border-box;
+}
+
+/* 상단 배너, 배너2 전체틀 */
+.top_row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 20px;
+  width: 100%;
+  height: 200px;
+  /* border: 3px solid red; */
+}
+
+/* banner1 banner2 가로 설정 */
+.top_row> :first-child {
+  flex: 6;
+}
+
+.top_row> :last-child {
+  flex: 3;
+}
+
+/* 하단 가로 */
+.bottom_row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 20px;
+  height: 250px;
+  margin-bottom: 20px;
+  /* margin-top: 15px; */
+}
+
+.weather,
+.news {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* 날씨&뉴스 비율 설정 */
+.weather {
+  flex-basis: 30%;
+  /* Weather가 30% 차지 */
+  margin-right: 15px;
+}
+
+.news {
+  flex-basis: 70%;
+  /* News가 70% 차지 */
+}
+
+/* banner */
+.banner {
+  flex-basis: 100%;
+}
+
+.notice_row {
+  margin: 30px 0;
+}
+
+.notice_row {
+  justify-content: center;
+  width: 100%;
+}
