@@ -46,6 +46,7 @@ const App = () => {
   return (
     <Router>
       <Routes>
+        {/* 로그인 여부에 따라 첫 화면을 결정 */}
         <Route
           path="/"
           element={
@@ -56,6 +57,7 @@ const App = () => {
             )
           }
         />
+        {/*  공정현황 그래프 페이지  */}
         <Route
           path="/babo"
           element={
@@ -68,6 +70,7 @@ const App = () => {
             </div>
           }
         />
+        {/* 메인 페이지, 로그인 되어야만 접근 가능 */}
         <Route
           path="/main"
           element={
