@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import Chart from "chart.js/auto";
 import "./Notice.css";
-
+import { Link } from "react-router-dom";
 const Notice = () => {
   // 차트 렌더링을 위한 ref 생성 (세 개의 차트)
   const chartRef1 = useRef(null); // n1-p1
@@ -148,25 +148,33 @@ const Notice = () => {
   return (
     <div className="notice">
       {/* 각각의 차트를 그릴 canvas */}
-      <canvas
-        ref={chartRef1}
-        style={{ width: "50%", height: "50%" }}
-      ></canvas>{" "}
+      <Link to="http://localhost:3000/menu1" className="canvas-link">
+        <canvas
+          ref={chartRef1}
+          style={{ width: "100%", height: "100%" }}
+        ></canvas>{" "}
+      </Link>
       {/* P1 차트 */}
-      <canvas
-        ref={chartRef2}
-        style={{ width: "50%", height: "50%" }}
-      ></canvas>{" "}
+      <Link to="http://localhost:3000/menu2" className="canvas-link">
+        <canvas
+          ref={chartRef2}
+          style={{ width: "100%", height: "100%" }}
+        ></canvas>{" "}
+      </Link>
       {/* P2 차트 */}
-      <canvas
-        ref={chartRef3}
-        style={{ width: "50%", height: "50%" }}
-      ></canvas>{" "}
+      <Link to="http://localhost:3000/menu3" className="canvas-link">
+        <canvas
+          ref={chartRef3}
+          style={{ width: "100%", height: "100%" }}
+        ></canvas>{" "}
+      </Link>
       {/* P3 차트 */}
-      <canvas
-        ref={chartRef4}
-        style={{ width: "50%", height: "50%" }}
-      ></canvas>{" "}
+      <Link to="http://localhost:3000/menu4" className="canvas-link">
+        <canvas
+          ref={chartRef4}
+          style={{ width: "100%", height: "100%" }}
+        ></canvas>{" "}
+      </Link>
       {/* 사유코드 차트 */}
     </div>
   );

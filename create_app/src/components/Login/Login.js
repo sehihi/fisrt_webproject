@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
-import './Login.css';
-import SignupModal from './SignupModal';
-
+import React, { useState } from "react";
+import "./Login.css";
+import SignupModal from "./SignupModal";
 
 const Login = ({ setIsAuthenticated }) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [showSignup, setShowSignup] = useState(false);
 
   const handleLogin = async (e) => {
@@ -13,10 +12,10 @@ const Login = ({ setIsAuthenticated }) => {
 
     // 로그인 요청
     try {
-      const response = await fetch('http://localhost:3001/login', {
-        method: 'POST',
+      const response = await fetch("http://localhost:3001/login", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ email, password }),
       });
@@ -25,11 +24,12 @@ const Login = ({ setIsAuthenticated }) => {
       if (response.ok) {
         alert(result); // "로그인 성공"
         setIsAuthenticated(true); // 로그인 성공 시 상태 업데이트
+        console.log(setIsAuthenticated);
       } else {
         alert(result); // "로그인 실패" 또는 "사용자가 존재하지 않습니다."
       }
     } catch (error) {
-      alert('로그인 중 오류 발생');
+      alert("로그인 중 오류 발생");
     }
   };
 
