@@ -4,7 +4,7 @@ h1 {
   justify-content: center;
   align-items: center;
 }
-/* #myPieChart {
+#myPieChart {
   display: flex;
   width: 50%;
   height: 50%;
@@ -18,4 +18,4 @@ h1 {
   display: flex;
   width: 50%;
   height: 50%;
-} */
+}

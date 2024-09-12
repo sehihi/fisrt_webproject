@@ -17,6 +17,26 @@ app.use(express.static(path.join(__dirname, "public")));
 
 // API 엔드포인트: 데이터를 클라이언트로 전달
 
+app.get("/n1-p1", (req, res) => {
+  const query = `
+        SELECT 
+          SUM(CASE WHEN 근원부서 = '0' THEN 1 ELSE 0 END) AS 근원부서_0인_값_개수,
+          SUM(CASE WHEN 근원부서 != '0' THEN 1 ELSE 0 END) AS 근원부서_0이_아닌_값_개수
+        FROM number1_p1;
+  `;
+
+  connection.query(query, (err, results) => {
+    if (err) {
+      console.error("쿼리 오류: " + err);
+      res.status(500).send("서버 오류");
+      return;
+    }
+
+    // 결과 데이터를 JSON 형태로 클라이언트에 전달
+    res.json(results[0]);
+  });
+});
+
 app.get("/status-data2", (req, res) => {
   const query = `
         SELECT

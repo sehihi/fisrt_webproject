@@ -70,7 +70,66 @@ app.post("/login", (req, res) => {
     }
   });
 });
+//p1 개정도 그래프
+app.get("/n1-p1", (req, res) => {
+  const query = `
+        SELECT 
+          COUNT(CASE WHEN \`근원부서\` = '0' THEN 1 END) AS 근원부서_존재하지않음,
+          COUNT(CASE WHEN \`근원부서\` != '0' THEN 1 END) AS 근원부서_존재
+        FROM number1_p1;
+  `;
 
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error("쿼리 오류: " + err);
+      res.status(500).send("서버 오류");
+      return;
+    }
+
+    // 결과 데이터를 JSON 형태로 클라이언트에 전달
+    res.json(results[0]);
+  });
+});
+//p2 개정도 그래프
+app.get("/n1-p2", (req, res) => {
+  const query = `
+        SELECT 
+          COUNT(CASE WHEN \`근원부서\` = '0' THEN 1 END) AS 근원부서_존재하지않음,
+          COUNT(CASE WHEN \`근원부서\` != '0' THEN 1 END) AS 근원부서_존재
+        FROM number1_p2;
+  `;
+
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error("쿼리 오류: " + err);
+      res.status(500).send("서버 오류");
+      return;
+    }
+
+    // 결과 데이터를 JSON 형태로 클라이언트에 전달
+    res.json(results[0]);
+  });
+});
+//p3 그래프 개정도
+app.get("/n1-p3", (req, res) => {
+  const query = `
+        SELECT 
+          COUNT(CASE WHEN \`근원부서\` = '0' THEN 1 END) AS 근원부서_존재하지않음,
+          COUNT(CASE WHEN \`근원부서\` != '0' THEN 1 END) AS 근원부서_존재
+        FROM number1_p3;
+  `;
+
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error("쿼리 오류: " + err);
+      res.status(500).send("서버 오류");
+      return;
+    }
+
+    // 결과 데이터를 JSON 형태로 클라이언트에 전달
+    res.json(results[0]);
+  });
+});
 // 그래프 시각화 부분 데이터 가져오기
 app.get("/status-data2", (req, res) => {
   console.log("status-data2 요청 들어옴"); // 이 부분 추가
