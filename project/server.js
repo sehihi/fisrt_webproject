@@ -14,8 +14,8 @@ app.use(bodyParser.json()); // JSON 데이터 파싱
 const db = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "0000", // MySQL 비밀번호 입력
-  database: "userdb", // 사용할 데이터베이스
+  password: "1223", // MySQL 비밀번호 입력
+  database: "webproject", // 사용할 데이터베이스
 });
 
 // MySQL 연결 확인
@@ -74,14 +74,142 @@ app.post("/login", (req, res) => {
 });
 
 // 뉴스 API - news 테이블에서 최신 뉴스 가져오기
-app.get('/news', (req, res) => {
-  const sql = 'SELECT * FROM news ORDER BY pubDate DESC';
+app.get("/news", (req, res) => {
+  const sql = "SELECT * FROM news ORDER BY pubDate DESC";
   db.query(sql, (err, result) => {
     if (err) {
-      return res.status(500).send('데이터 가져오기 오류');
+      return res.status(500).send("데이터 가져오기 오류");
     }
     console.log(result); // 데이터 로그 출력
     res.json(result);
+  });
+});
+
+// 그래프 데이터 app.get--------------------------------------
+//p1 개정도 그래프
+app.get("/n1-p1", (req, res) => {
+  const query = `
+        SELECT 
+          COUNT(CASE WHEN \`근원부서\` = '0' THEN 1 END) AS 근원부서_존재하지않음,
+          COUNT(CASE WHEN \`근원부서\` != '0' THEN 1 END) AS 근원부서_존재
+        FROM number1_p1;
+  `;
+
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error("쿼리 오류: " + err);
+      res.status(500).send("서버 오류");
+      return;
+    }
+
+    // 결과 데이터를 JSON 형태로 클라이언트에 전달
+    res.json(results[0]);
+  });
+});
+//p2 개정도 그래프
+app.get("/n1-p2", (req, res) => {
+  const query = `
+        SELECT 
+          COUNT(CASE WHEN \`근원부서\` = '0' THEN 1 END) AS 근원부서_존재하지않음,
+          COUNT(CASE WHEN \`근원부서\` != '0' THEN 1 END) AS 근원부서_존재
+        FROM number1_p2;
+  `;
+
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error("쿼리 오류: " + err);
+      res.status(500).send("서버 오류");
+      return;
+    }
+
+    // 결과 데이터를 JSON 형태로 클라이언트에 전달
+    res.json(results[0]);
+  });
+});
+//p3 그래프 개정도
+app.get("/n1-p3", (req, res) => {
+  const query = `
+        SELECT 
+          COUNT(CASE WHEN \`근원부서\` = '0' THEN 1 END) AS 근원부서_존재하지않음,
+          COUNT(CASE WHEN \`근원부서\` != '0' THEN 1 END) AS 근원부서_존재
+        FROM number1_p3;
+  `;
+
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error("쿼리 오류: " + err);
+      res.status(500).send("서버 오류");
+      return;
+    }
+
+    // 결과 데이터를 JSON 형태로 클라이언트에 전달
+    res.json(results[0]);
+  });
+});
+// 그래프 시각화 부분 데이터 가져오기
+app.get("/status-data2", (req, res) => {
+  // console.log("status-data2 요청 들어옴"); // 이 부분 추가
+  const query = `
+        SELECT
+          COUNT(CASE WHEN \`사유코드설명\` = '0' THEN 1 END) AS 정상,
+          COUNT(CASE WHEN \`사유코드설명\` != '0' THEN 1 END) AS 불량
+        FROM number5;
+      `;
+
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error("쿼리 오류: " + err);
+      res.status(500).send("서버 오류");
+      return;
+    }
+
+    // 결과 데이터를 JSON 형태로 클라이언트에 전달
+    res.json(results[0]); // 중복된 응답 제거
+  });
+});
+
+// 불량 데이터 상세 정보 가져오기
+app.get("/fault-details", (req, res) => {
+  // console.log("status-data2 경로로 요청이 들어옴");
+  const query = `
+      SELECT \`사유코드설명\`, COUNT(*) AS count
+      FROM number5
+      WHERE \`사유코드설명\` != '0'
+      GROUP BY \`사유코드설명\`;
+    `;
+
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error("쿼리 오류: " + err);
+      res.status(500).send("서버 오류");
+      return;
+    }
+
+    res.json(results);
+  });
+});
+
+// 클릭한 사유코드 설명에 따른 선종 데이터를 반환하는 API
+app.get("/detail-data/:reasonCode", (req, res) => {
+  const reasonCode = req.params.reasonCode;
+  console.log(reasonCode); // 클릭된 사유코드 설명을 받음
+  const query = `
+    SELECT \`선종\`, COUNT(*) AS count 
+    FROM number5 
+    WHERE \`사유코드설명\` = ?
+    GROUP BY \`선종\`;
+  `;
+
+  db.query(query, [reasonCode], (err, results) => {
+    if (err) {
+      console.error("쿼리 오류: " + err);
+      res.status(500).send("서버 오류");
+      return;
+    }
+
+    res.json(results);
+
+    console.log(results); // 데이터를 클라이언트로 전송
   });
 });
 

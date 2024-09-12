@@ -29,25 +29,8 @@ const App = () => {
             )
           }
         />
-
-        {/*  공정현황 그래프 페이지  */}
+        {/* 새로고침 하면 밖으로 나가짐 */}
         {/* <Route
-          path="/babo"
-          element={
-            <div className="app_container">
-              <Menu setActiveMenu={() => { }} />
-              <div className="main_content">
-                <Info />
-                <div className="content_container">
-                  <Graph />
-                </div>
-              </div>
-            </div>
-          }
-        /> */}
-
-        {/* 메인 페이지, 로그인 되어야만 접근 가능 */}
-        <Route
           path="/main"
           element={
             isAuthenticated ? (
@@ -64,6 +47,91 @@ const App = () => {
             ) : (
               <Navigate to="/" />
             )
+          }
+        /> */}
+
+        {/* 메인 페이지, 로그인 되어야만 접근 가능 */}
+        <Route
+          path="/main"
+          element={
+            <div className="app_container">
+              <Menu setActiveMenu={() => {}} />
+              <div className="main_content">
+                <Info />
+                <div className="content_container">
+                  <LeftContainer />
+                  <RightContainer />
+                </div>
+              </div>
+            </div>
+          }
+        />
+
+        {/* 메뉴 1 페이지 , 로그인 되어야만 접근 가능 */}
+        <Route
+          path="/menu1"
+          element={
+            <div className="app_container">
+              <Menu setActiveMenu={() => {}} />
+              <div className="main_content">
+                <Info />
+                <div className="content_container">
+                  <LeftContainer />
+                  <RightContainer />
+                </div>
+              </div>
+            </div>
+          }
+        />
+
+        {/* 메뉴 2 페이지 , 로그인 되어야만 접근 가능 */}
+        <Route
+          path="/menu2"
+          element={
+            <div className="app_container">
+              <Menu setActiveMenu={() => {}} />
+              <div className="main_content">
+                <Info />
+                <div className="content_container">
+                  <LeftContainer />
+                  <RightContainer />
+                </div>
+              </div>
+            </div>
+          }
+        />
+
+        {/* 메뉴 3 페이지 , 로그인 되어야만 접근 가능 */}
+        <Route
+          path="/menu3"
+          element={
+            <div className="app_container">
+              <Menu setActiveMenu={() => {}} />
+              <div className="main_content">
+                <Info />
+                <div className="content_container">
+                  <LeftContainer />
+                  <RightContainer />
+                </div>
+              </div>
+            </div>
+          }
+        />
+
+        {/* 메뉴 4 페이지 , 로그인 되어야만 접근 가능 */}
+        <Route
+          path="/menu4"
+          element={
+            <div className="app_container">
+              <Menu setActiveMenu={() => {}} />
+              <div className="main_content">
+                <Info />
+                <div className="content_container">
+                  <LeftContainer />
+                  <RightContainer />
+                </div>
+              </div>
+            </div>
           }
         />
       </Routes>
