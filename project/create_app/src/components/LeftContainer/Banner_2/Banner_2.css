@@ -1,0 +1,18 @@
+.banner_2 {
+    position: relative;
+    /* 상대 위치 */
+    width: 100%;
+    /* 너비 전체 사용 */
+    height: 100%;
+    /* 높이 전체 사용 */
+    overflow: hidden;
+    /* 벗어나는 내용 숨김 */
+}
+
+.banner_2 iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
