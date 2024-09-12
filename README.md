@@ -7,3 +7,4 @@ npm i ejs express express-async-handler express-ejs-layouts mysql mysql2 xlsx
 --public  
  --index.html  
 --app.js
+![image](https://github.com/user-attachments/assets/cd5bc3d8-f573-4131-bbc0-fa88326d6450)
