@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+        #weather img {
+            width: 100px; /* 아이콘 크기 조절 */
+        }
+    </style>
+</head>
+<body>
+    <div id = "weather">
+        <p id = "description">Loading weather...</p>
+        <img id = "icon" src = "" alt = "Weather Icon">
+        <p id = "temperature"></p>
+        <p id = "humidity"></p>
+        <p id = "wind"></p>
+        <p id = "feelslike"></p>
+        <p id = "rain_pop"></p>
+    </div>
+    <script>
+        const apiKey = '12cbb94c69458b0c45a01c760c2e7bf1'; // 자신의 API 키를 여기에 입력하세요
+        const latitude = 34.883;  // Geoje의 위도
+        const longitude = 128.620; // Geoje의 경도
+
+        async function fetchWeatherAndForecast() {
+            try {
+                const [weather_response, forecast_response] = await Promise.all([
+                    fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric`),
+                    fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric`)
+                ]);
+
+                const weather_data = await weather_response.json();
+                const forecast_data = await forecast_response.json();
+
+                console.log('Weather Data:', weather_data);
+                console.log('Forecast Data:', forecast_data);
+
+                if (weather_data.cod === 200) {
+
+                    const descriptionMap = {
+                        "clear sky": "맑음",
+                        "few clouds": "조금 흐림",
+                        "scattered clouds": "드문드문 구름",
+                        "broken clouds": "흐림",
+                        "overcast clouds": "흐린 하늘",
+                        "light rain": "가벼운 비",
+                        "moderate rain": "보통 비",
+                        "heavy intensity rain": "강한 비",
+                        "very heavy rain": "매우 강한 비",
+                        "extreme rain": "극심한 비",
+                        "freezing rain": "어는 비",
+                        "light intensity shower rain": "가벼운 소나기",
+                        "shower rain": "소나기",
+                        "heavy intensity shower rain": "강한 소나기",
+                        "ragged shower rain": "거센 소나기",
+                        "light intensity drizzle": "약한 이슬비",
+                        "drizzle": "이슬비",
+                        "heavy intensity drizzle": "강한 이슬비",
+                        "light intensity drizzle rain": "가벼운 이슬비와 비",
+                        "drizzle rain": "이슬비와 비",
+                        "heavy intensity drizzle rain": "강한 이슬비와 비",
+                        "shower drizzle": "소나기성 이슬비",
+                        "thunderstorm with light rain": "가벼운 비를 동반한 천둥번개",
+                        "thunderstorm with rain": "비를 동반한 천둥번개",
+                        "thunderstorm with heavy rain": "강한 비를 동반한 천둥번개",
+                        "light thunderstorm": "약한 천둥번개",
+                        "thunderstorm": "천둥번개",
+                        "heavy thunderstorm": "강한 천둥번개",
+                        "ragged thunderstorm": "거센 천둥번개",
+                        "thunderstorm with light drizzle": "약한 이슬비를 동반한 천둥번개",
+                        "thunderstorm with drizzle": "이슬비를 동반한 천둥번개",
+                        "thunderstorm with heavy drizzle": "강한 이슬비를 동반한 천둥번개",
+                        "light snow": "가벼운 눈",
+                        "snow": "눈",
+                        "heavy snow": "강한 눈",
+                        "sleet": "진눈깨비",
+                        "light shower sleet": "가벼운 소나기성 진눈깨비",
+                        "shower sleet": "소나기성 진눈깨비",
+                        "light rain and snow": "가벼운 비와 눈",
+                        "rain and snow": "비와 눈",
+                        "light shower snow": "가벼운 소나기성 눈",
+                        "shower snow": "소나기성 눈",
+                        "heavy shower snow": "강한 소나기성 눈",
+                        "mist": "안개",
+                        "smoke": "연기",
+                        "haze": "연무",
+                        "sand, dust whirls": "모래, 먼지 소용돌이",
+                        "fog": "짙은 안개",
+                        "sand": "모래",
+                        "dust": "먼지",
+                        "volcanic ash": "화산재",
+                        "squalls": "돌풍",
+                        "tornado": "토네이도",
+                        "tropical storm": "열대성 폭풍",
+                        "hurricane": "허리케인",
+                        "cold": "추운 날씨",
+                        "hot": "더운 날씨",
+                        "windy": "바람이 많이 부는 날씨",
+                        "hail": "우박",
+                        "calm": "고요한 날씨",
+                        "light breeze": "약한 산들바람",
+                        "gentle breeze": "부드러운 바람",
+                        "moderate breeze": "보통 바람",
+                        "fresh breeze": "신선한 바람",
+                        "strong breeze": "강한 바람",
+                        "high wind, near gale": "강한 바람, 갤바람 근처",
+                        "gale": "갤바람",
+                        "severe gale": "심한 갤바람",
+                        "storm": "폭풍",
+                        "violent storm": "격렬한 폭풍"
+                    };
+
+                    function translateDescription(description) {
+                        // `description`이 `descriptionMap`에 있으면 해당 번역을 반환하고, 없으면 원래 값을 반환
+                        return descriptionMap[description];
+                    }
+
+                    const iconCode = weather_data.weather[0].icon;
+                    const temperature = weather_data.main.temp;
+                    const humidity = weather_data.main.humidity;
+                    const windSpeed = weather_data.wind.speed;
+                    const feelslike = weather_data.main.feels_like;
+
+                    document.getElementById('description').textContent = `날씨: ${translateDescription(weather_data.weather[0].description)}`;
+                    document.getElementById('temperature').textContent = `기온: ${temperature}°C`;
+                    document.getElementById('humidity').textContent = `습도: ${humidity}%`;
+                    document.getElementById('wind').textContent = `풍속: ${windSpeed} m/s`;
+                    document.getElementById('feelslike').textContent = `체감온도: ${feelslike}°C`;
+
+                    const iconUrl = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
+                    document.getElementById('icon').src = iconUrl;
+                } else {
+                    document.getElementById('description').textContent = 'Failed to fetch weather data';
+                    document.getElementById('temperature').textContent = '';
+                    document.getElementById('humidity').textContent = '';
+                    document.getElementById('wind').textContent = '';
+                    document.getElementById('icon').src = '';
+                }
+
+                // 예보 데이터 처리
+                if (forecast_data.cod === '200') {
+                    const rainPop = forecast_data.list[0].pop; // 강수 확률
+                    if (rainPop !== undefined) {
+                        document.getElementById('rain_pop').textContent = `강수확률: ${rainPop * 100}%`;
+                    } else {
+                        document.getElementById('rain_pop').textContent = '강수 확률 정보 없음';
+                    }
+                } else {
+                    document.getElementById('rain_pop').textContent = 'Failed to fetch forecast data';
+                }
+            } catch (error) {
+                console.error('An error occurred:', error);
+                document.getElementById('description').textContent = 'An error occurred';
+                document.getElementById('temperature').textContent = '';
+                document.getElementById('humidity').textContent = '';
+                document.getElementById('wind').textContent = '';
+                document.getElementById('icon').src = '';
+                document.getElementById('rain_pop').textContent = '';
+            }
+        }
+
+        fetchWeatherAndForecast();
+    </script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+.info_container {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    background-color: red;
+    padding-top: 20px;
+    box-sizing: border-box;
+    background-color: #F7F7F7;
+}
+
+.info_box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-right: 120px;
+}
+
+.name,
+.depart {
+    height: 50%;
+    font-size: 16px;
+    margin-left: 10px;
+}
+
+.name {
+    font-weight: bold;
+    font-size: 25px;
+    line-height: 55px;
+}
+
+.depart {
+    line-height: 30px;
+}
+
+/* 이름과 부서를 세로로 쌓기 위한 추가 스타일 */
+.info_text {
+    display: flex;
+    width: 130px;
+    height: 100%;
+    box-sizing: border-box;
+    flex-direction: column;  /* 세로로 쌓이게 설정 */
+}
+
+.profile_img {
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    object-fit: cover;
+    background-color: rebeccapurple;
+}

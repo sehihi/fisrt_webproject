@@ -1,0 +1,45 @@
+.left_container {
+  padding-left: 100px;
+}
+
+.bottom_row {
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.top_row {
+  width: 100%;
+  background-color: red;
+}
+
+.weather,
+.news {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* 3대 7 비율 설정 */
+.weather {
+  flex-basis: 30%;
+  /* Weather가 30% 차지 */
+  margin-right: 15px;
+}
+
+.news {
+  flex-basis: 70%;
+  /* News가 70% 차지 */
+}
+
+.banner {
+  flex-basis: 100%;
+}
+
+.notice_row {
+  margin: 20px 0;
+}
