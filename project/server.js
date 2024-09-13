@@ -152,6 +152,164 @@ app.get("/n1-p1-2", (req, res) => {
   });
 });
 
+//p1 2번 그래프*********************************************
+app.get("/n1-p1-g2", (req, res) => {
+  const query = `
+    SELECT 
+      \`긴급도\`, 
+      COUNT(*) AS 긴급도_갯수
+    FROM number2_p111
+    GROUP BY \`긴급도\`;
+  `;
+
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error("쿼리 오류: " + err);
+      res.status(500).send("서버 오류");
+      return;
+    }
+
+    // 결과 데이터를 JSON 형태로 클라이언트에 전달
+    res.json(results);
+  });
+});
+app.get("/n1-p1-g2-2", (req, res) => {
+  const query = `
+    SELECT 
+      \`진행상태\`, 
+      COUNT(*) AS 진행상태_갯수
+    FROM number2_p111
+    GROUP BY \`진행상태\`;
+  `;
+
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error("쿼리 오류: " + err);
+      res.status(500).send("서버 오류");
+      return;
+    }
+
+    // 결과 데이터를 JSON 형태로 클라이언트에 전달
+    res.json(results);
+  });
+});
+app.get("/n1-p1-g2-3-Low", (req, res) => {
+  const query = `
+    SELECT 
+      \`중요도\`,
+      CASE
+        WHEN DATEDIFF(
+          STR_TO_DATE(\`조치완료일\`, '%Y-%m-%d %H:%i:%s'),
+          STR_TO_DATE(\`등록일\`, '%Y-%m-%d %H:%i:%s')
+        ) <= 1 THEN '1일 이내'
+        WHEN DATEDIFF(
+          STR_TO_DATE(\`조치완료일\`, '%Y-%m-%d %H:%i:%s'),
+          STR_TO_DATE(\`등록일\`, '%Y-%m-%d %H:%i:%s')
+        ) <= 7 THEN '7일 이내'
+        WHEN DATEDIFF(
+          STR_TO_DATE(\`조치완료일\`, '%Y-%m-%d %H:%i:%s'),
+          STR_TO_DATE(\`등록일\`, '%Y-%m-%d %H:%i:%s')
+        ) <= 30 THEN '한 달 이내'
+        ELSE '한 달 이상'
+      END AS date_range,
+      COUNT(*) AS count
+    FROM number2_p111
+    WHERE \`진행상태\` = '완료'
+      AND \`긴급도\` = '상'
+      AND \`중요도\` = 'Low'
+    GROUP BY \`중요도\`, date_range;
+  `;
+
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error("쿼리 오류: " + err);
+      res.status(500).send("서버 오류");
+      return;
+    }
+
+    // 결과 데이터를 JSON 형태로 클라이언트에 전달
+    res.json(results);
+  });
+});
+
+app.get("/n1-p1-g2-3-Medium", (req, res) => {
+  const query = `
+    SELECT 
+      \`중요도\`,
+      CASE
+        WHEN DATEDIFF(
+          STR_TO_DATE(\`조치완료일\`, '%Y-%m-%d %H:%i:%s'),
+          STR_TO_DATE(\`등록일\`, '%Y-%m-%d %H:%i:%s')
+        ) <= 1 THEN '1일 이내'
+        WHEN DATEDIFF(
+          STR_TO_DATE(\`조치완료일\`, '%Y-%m-%d %H:%i:%s'),
+          STR_TO_DATE(\`등록일\`, '%Y-%m-%d %H:%i:%s')
+        ) <= 7 THEN '7일 이내'
+        WHEN DATEDIFF(
+          STR_TO_DATE(\`조치완료일\`, '%Y-%m-%d %H:%i:%s'),
+          STR_TO_DATE(\`등록일\`, '%Y-%m-%d %H:%i:%s')
+        ) <= 30 THEN '한 달 이내'
+        ELSE '한 달 이상'
+      END AS date_range,
+      COUNT(*) AS count
+    FROM number2_p111
+    WHERE \`진행상태\` = '완료'
+      AND \`긴급도\` = '상'
+      AND \`중요도\` = 'Medium'
+    GROUP BY \`중요도\`, date_range;
+  `;
+
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error("쿼리 오류: " + err);
+      res.status(500).send("서버 오류");
+      return;
+    }
+
+    // 결과 데이터를 JSON 형태로 클라이언트에 전달
+    res.json(results);
+  });
+});
+
+app.get("/n1-p1-g2-3-High", (req, res) => {
+  const query = `
+    SELECT 
+      \`중요도\`,
+      CASE
+        WHEN DATEDIFF(
+          STR_TO_DATE(\`조치완료일\`, '%Y-%m-%d %H:%i:%s'),
+          STR_TO_DATE(\`등록일\`, '%Y-%m-%d %H:%i:%s')
+        ) <= 1 THEN '1일 이내'
+        WHEN DATEDIFF(
+          STR_TO_DATE(\`조치완료일\`, '%Y-%m-%d %H:%i:%s'),
+          STR_TO_DATE(\`등록일\`, '%Y-%m-%d %H:%i:%s')
+        ) <= 7 THEN '7일 이내'
+        WHEN DATEDIFF(
+          STR_TO_DATE(\`조치완료일\`, '%Y-%m-%d %H:%i:%s'),
+          STR_TO_DATE(\`등록일\`, '%Y-%m-%d %H:%i:%s')
+        ) <= 30 THEN '한 달 이내'
+        ELSE '한 달 이상'
+      END AS date_range,
+      COUNT(*) AS count
+    FROM number2_p111
+    WHERE \`진행상태\` = '완료'
+      AND \`긴급도\` = '상'
+      AND \`중요도\` = 'High'
+    GROUP BY \`중요도\`, date_range;
+  `;
+
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error("쿼리 오류: " + err);
+      res.status(500).send("서버 오류");
+      return;
+    }
+
+    // 결과 데이터를 JSON 형태로 클라이언트에 전달
+    res.json(results);
+  });
+});
+
 //p2 개정도 그래프
 app.get("/n1-p2", (req, res) => {
   const query = `

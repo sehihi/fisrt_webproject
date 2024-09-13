@@ -1,12 +1,13 @@
 import React, { useEffect, useRef } from "react";
 import Chart from "chart.js/auto";
-import "./Graph.css";
-const Graph = () => {
+import "./Graph2.css";
+const Graph2 = () => {
   // 차트 렌더링을 위한 ref 생성 (세 개의 차트)
   const chartRef1 = useRef(null); // n1-p1
   const chartRef2 = useRef(null); // n1-p2
   const chartRef3 = useRef(null); // n1-p3
   const chartRef4 = useRef(null); // fault-details
+  const chartRef5 = useRef(null); // fault-details
 
   // 차트 데이터를 받아서 차트를 그리는 함수
   const fetchDataAndDrawChart = async (url, chartRef, title) => {
@@ -35,8 +36,8 @@ const Graph = () => {
         datasets: [
           {
             data: [data.근원부서_존재하지않음, data.근원부서_존재], // 서버에서 받은 데이터
-            backgroundColor: darkBlueColors.slice(0, 2), // 파란색 계열 색상
-            hoverBackgroundColor: darkBlueColors.slice(0, 2),
+            backgroundColor: darkBlueColors.slice(0, 5), // 파란색 계열 색상
+            hoverBackgroundColor: darkBlueColors.slice(0, 5),
           },
         ],
       };
@@ -136,19 +137,29 @@ const Graph = () => {
   // useEffect를 사용해 차트를 그리는 로직 실행
   useEffect(() => {
     fetchDataAndDrawChart(
-      "http://localhost:3001/n1-p1",
+      "http://localhost:3001/n1-p1-g2",
       chartRef1,
-      "P1 개정도 현황"
+      "긴급도 현황"
     );
     fetchDataAndDrawBarChart(
-      "http://localhost:3001/n1-p1-1",
+      "http://localhost:3001/n1-p1-g2-2",
       chartRef2,
-      "원인코드 분석(근원부서 무)"
+      "진행상태 현황"
     );
     fetchDataAndDrawBarChart(
-      "http://localhost:3001/n1-p1-2",
+      "http://localhost:3001/n1-p1-g2-3-High",
       chartRef3,
-      "원인코드 분석(근원부서 유)"
+      "상-High : 설계변경현황"
+    );
+    fetchDataAndDrawBarChart(
+      "http://localhost:3001/n1-p1-g2-3-Medium",
+      chartRef4,
+      "상-Medium : 설계변경현황"
+    );
+    fetchDataAndDrawBarChart(
+      "http://localhost:3001/n1-p1-g2-3-Low",
+      chartRef5,
+      "상-Low : 설계변경현황"
     );
   }, []);
 
@@ -159,19 +170,24 @@ const Graph = () => {
         ref={chartRef1}
         style={{ width: "100%", height: "100%" }}
       ></canvas>{" "}
-      {/* P1 차트 */}
       <canvas
         ref={chartRef2}
         style={{ width: "100%", height: "100%" }}
       ></canvas>{" "}
-      {/* P2 차트 */}
       <canvas
         ref={chartRef3}
         style={{ width: "100%", height: "100%" }}
       ></canvas>{" "}
-      {/* P3 차트 */}
+      <canvas
+        ref={chartRef4}
+        style={{ width: "100%", height: "100%" }}
+      ></canvas>{" "}
+      <canvas
+        ref={chartRef5}
+        style={{ width: "100%", height: "100%" }}
+      ></canvas>{" "}
     </div>
   );
 };
 
-export default Graph;
+export default Graph2;

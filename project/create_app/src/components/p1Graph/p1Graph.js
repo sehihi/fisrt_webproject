@@ -1,6 +1,7 @@
 import React from "react";
 import "./P1graph.css";
 import Graph from "./Graph/Graph";
+import Graph2 from "./Graph2/Graph2";
 
 const P1graph = () => {
   return (
@@ -10,6 +11,7 @@ const P1graph = () => {
       {/* Notice는 독립적인 섹션으로 */}
       <div className="notice_row">
         <Graph />
+        <Graph2 />
       </div>
       {/* Weather와 News를 가로로 배치 */}
       <div className="row bottom_row"></div>
