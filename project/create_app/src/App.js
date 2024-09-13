@@ -12,7 +12,7 @@ import LeftContainer from "./components/LeftContainer/LeftContainer";
 import RightContainer from "./components/RightContainer/RightContainer";
 import Login from "./components/Login/Login"; // 로그인 컴포넌트 임포트
 import Popup from "./components/RightContainer/Popup";
-import p1Graph from "./components/p1Graph/p1Graph";
+import P1graph from "./components/P1graph/P1graph";
 // import Graph from "./components/GraphContainer/Graph";
 
 const App = () => {
@@ -117,7 +117,7 @@ const App = () => {
               <div className="main_content">
                 <Info />
                 <div className="content_container">
-                  <p1Graph />
+                  <P1graph />
                 </div>
               </div>
             </div>

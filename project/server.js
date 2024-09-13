@@ -106,6 +106,52 @@ app.get("/n1-p1", (req, res) => {
     res.json(results[0]);
   });
 });
+
+//근원부서가 없을 때 원인코드 작성
+app.get("/n1-p1-1", (req, res) => {
+  const query = `
+    SELECT 
+      \`원인코드\`, 
+      COUNT(*) AS 원인코드_갯수
+    FROM number1_p1
+    WHERE \`근원부서\` = '0'
+    GROUP BY \`원인코드\`;
+  `;
+
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error("쿼리 오류: " + err);
+      res.status(500).send("서버 오류");
+      return;
+    }
+
+    // 결과 데이터를 JSON 형태로 클라이언트에 전달
+    res.json(results);
+  });
+});
+//근원부서가 있을 때 원인코드 작성
+app.get("/n1-p1-2", (req, res) => {
+  const query = `
+    SELECT 
+      \`원인코드\`, 
+      COUNT(*) AS 원인코드_갯수
+    FROM number1_p1
+    WHERE \`근원부서\` != '0'
+    GROUP BY \`원인코드\`;
+  `;
+
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error("쿼리 오류: " + err);
+      res.status(500).send("서버 오류");
+      return;
+    }
+
+    // 결과 데이터를 JSON 형태로 클라이언트에 전달
+    res.json(results);
+  });
+});
+
 //p2 개정도 그래프
 app.get("/n1-p2", (req, res) => {
   const query = `
