@@ -1,3 +1,6 @@
+/* Calendar.css */
+
+/* 툴바 스타일 */
 .custom-toolbar {
   display: flex;
   align-items: center;
@@ -18,4 +21,53 @@
   padding: 5px 10px;
   cursor: pointer;
   font-size: 18px;
+}
+
+/* 캘린더의 내부 패딩을 제거합니다 */
+.rbc-calendar {
+  padding: 0 !important; /* 패딩을 0으로 설정 */
+}
+
+.rbc-row-bg {
+  display: flex;
+  border-collapse: collapse; /* Collapse borders for the table look */
+}
+
+.rbc-day-bg {
+  border-right: 1px solid #ccc; /* 날짜 사이에 수직 선 추가 */
+  width: calc(100% / 7); /* 7열로 균등 분할 */
+  box-sizing: border-box; /* 패딩/보더가 너비에 영향을 미치지 않도록 */
+  height: 100px; /* 필요에 따라 높이 조정 */
+  padding: 0; /* 패딩 제거 */
+  margin: 0;
+  background-color: transparent; /* 배경색을 투명하게 설정 */
+}
+
+.rbc-day-bg:last-child {
+  border-right: none; /* 마지막 열의 오른쪽 경계 제거 */
+}
+
+/* 날짜 셀과 배경 스타일 */
+.rbc-date-cell {
+  padding: 0; /* 날짜 셀의 패딩 제거 */
+  margin: 0; /* 여백 제거 */
+  background-color: transparent !important; /* 날짜 셀 배경색 투명하게 설정 */
+  border: none !important; /* 날짜 셀의 테두리 제거 */
+}
+
+/* 날짜 숫자의 스타일을 직접 조정 */
+.rbc-date-cell > span {
+  background-color: transparent !important; /* 날짜 숫자의 배경색을 투명하게 설정 */
+  color: inherit !important; /* 날짜 숫자의 색상을 상속받도록 설정 */
+  border: none !important; /* 날짜 숫자에 적용된 테두리 제거 */
+}
+
+/* 버튼 호버 스타일 */
+button:hover {
+  background-color: transparent !important; /* 배경색을 투명하게 설정하여 검은색 영역 제거 */
+}
+
+/* 스크롤바 스타일 */
+::-webkit-scrollbar-thumb:hover {
+  background: transparent; /* 스크롤바의 배경을 투명하게 설정 */
 }

@@ -39,14 +39,6 @@ const App = () => {
     setShowPopup(false);
   };
 
-  const handleUpdateTask = (id, updatedTask) => {
-    setTasks(tasks.map((task) => (task.id === id ? updatedTask : task)));
-  };
-
-  const handleDeleteTask = (id) => {
-    setTasks(tasks.filter((task) => task.id !== id));
-  };
-
   // ****************************************************
 
   return (

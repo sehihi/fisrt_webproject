@@ -1,4 +1,3 @@
-// RightContainer.js
 import React, { useState } from "react";
 import MyCalendar from "./Calendar/Calendar"; // 변경된 이름
 import ToDoList from "./ToDoList/ToDoList";
@@ -29,19 +28,23 @@ const RightContainer = () => {
 
   return (
     <div className="right-container">
-      <MyCalendar
-        events={events}
-        setEvents={setEvents}
-        setTasks={setTasks}
-        setSelectedDate={setSelectedDate}
-      />
-      <ToDoList
-        tasks={tasks}
-        updateTask={updateTask}
-        deleteTask={deleteTask}
-        selectedDate={selectedDate}
-        onDateChange={setSelectedDate}
-      />
+      <div className="calendar-container">
+        <MyCalendar
+          events={events}
+          setEvents={setEvents}
+          setTasks={setTasks}
+          setSelectedDate={setSelectedDate}
+        />
+      </div>
+      <div className="todo-container">
+        <ToDoList
+          tasks={tasks}
+          updateTask={updateTask}
+          deleteTask={deleteTask}
+          selectedDate={selectedDate}
+          onDateChange={setSelectedDate}
+        />
+      </div>
     </div>
   );
 };

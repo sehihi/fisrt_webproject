@@ -45,7 +45,9 @@ const ToDoList = ({
 
   return (
     <div>
-      <h2>할 일 목록</h2>
+      <div className="title-container">
+        <h2>할 일 목록</h2>
+      </div>
       <div className="navigation">
         <button
           onClick={() => {
@@ -67,6 +69,7 @@ const ToDoList = ({
           {">"}
         </button>
       </div>
+
       <ul>
         {filteredTasks.length === 0 ? (
           <li>할 일 목록이 없습니다.</li>
@@ -128,12 +131,18 @@ const ToDoList = ({
                       <button
                         className="edit-button"
                         onClick={() => handleEditClick(task)}
+                        disabled={!task.completed} // 체크박스가 체크되지 않으면 비활성화
                       >
                         수정
                       </button>
                       <button
                         className="delete-button"
-                        onClick={() => deleteTask(task.id)}
+                        onClick={() => {
+                          if (task.completed) {
+                            deleteTask(task.id);
+                          }
+                        }}
+                        disabled={!task.completed} // 체크박스가 체크되지 않으면 비활성화
                       >
                         삭제
                       </button>

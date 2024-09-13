@@ -14,8 +14,8 @@ app.use(bodyParser.json()); // JSON 데이터 파싱
 const db = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "1223", // MySQL 비밀번호 입력
-  database: "webproject", // 사용할 데이터베이스
+  password: "0000", // MySQL 비밀번호 입력
+  database: "userdb", // 사용할 데이터베이스
 });
 
 // MySQL 연결 확인

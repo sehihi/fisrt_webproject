@@ -1,45 +1,73 @@
 /* ToDoList.css */
 
+/* 제목을 가운데로 배치 */
+.title-container {
+  text-align: center; /* 텍스트 가운데 정렬 */
+  margin-bottom: 20px; /* 제목과 하단 요소 사이의 간격 */
+}
+
+/* todo-item 간의 간격 */
 .todo-item {
   margin-bottom: 15px;
-}
-
-.todo-item .checkbox {
-  margin-right: 10px;
-}
-
-.todo-item .task-content {
+  list-style-type: none; /* li 요소의 마커를 없앰 */
   display: flex;
   flex-direction: column;
+  width: 100%; /* 전체 너비 사용 */
+  max-width: 600px; /* 원하는 최대 너비 설정 */
 }
 
-.todo-item .task-content .title {
+/* 제목과 내용 부분의 동일한 스타일 */
+.task-content .title,
+.task-content .description {
   display: flex;
   align-items: center;
+  width: 100%; /* 전체 너비를 100%로 설정 */
+  box-sizing: border-box; /* 패딩과 테두리를 포함한 너비 조정 */
 }
 
-.todo-item .task-content .title span {
-  margin-right: 10px;
+.task-content .title {
+  gap: 10px; /* 체크박스와 제목 사이의 간격 */
+  max-width: calc(
+    100% - 35px
+  ); /* 제목의 최대 너비를 체크박스와 간격을 고려하여 설정 */
 }
 
-.todo-item .task-content .description {
+.task-content .title .checkbox {
+  flex: 0 0 25px; /* 체크박스 너비 고정 */
+  margin-right: 10px; /* 체크박스와 제목 사이의 간격 조정 */
+}
+
+.task-content .title span {
+  flex: 1; /* 제목 부분의 너비를 자동으로 설정 */
+  overflow: hidden; /* 제목이 길어질 경우 숨김 처리 */
+  text-overflow: ellipsis; /* 제목이 길어질 경우 '...'으로 표시 */
+  white-space: nowrap; /* 제목이 한 줄로 표시되도록 설정 */
+}
+
+/* 체크박스가 있는 부분과 내용이 동일한 너비를 가지도록 조정 */
+.task-content .description {
   margin-top: 5px;
-  margin-bottom: 10px;
+  padding-left: 43px; /* 체크박스 너비와 간격을 고려하여 패딩 설정 */
+  box-sizing: border-box; /* 패딩과 테두리를 포함한 너비 조정 */
 }
 
-.todo-item .task-content .buttons {
+/* 버튼 영역 */
+.task-content .buttons {
   display: flex;
-  gap: 5px;
+  gap: 5px; /* 버튼 간격 */
+  margin-top: 10px;
 }
 
-/* Navigation section styles */
+/* 내비게이션 스타일 */
 .navigation {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between; /* 왼쪽과 오른쪽 끝으로 정렬 */
   margin-bottom: 20px;
+  width: 100%; /* 전체 너비 사용 */
 }
 
+/* 내비게이션 버튼 */
 .navigation button {
   background-color: #007bff;
   border: none;
@@ -47,66 +75,41 @@
   padding: 0; /* 여백을 0으로 설정하여 배경 영역을 줄입니다. */
   font-size: 16px;
   cursor: pointer;
-  margin: 0 5px;
-  width: 30px; /* 버튼의 너비를 직접 설정합니다. */
-  height: 30px; /* 버튼의 높이를 직접 설정합니다. */
+  margin: 0; /* 마진 제거 */
+  width: 25px; /* 버튼의 너비를 줄임 */
+  height: 25px; /* 버튼의 높이를 줄임 */
   display: flex;
   align-items: center;
   justify-content: center;
   line-height: 1; /* 버튼 내 텍스트와 버튼 영역 사이의 여백을 줄입니다. */
 }
 
+/* 내비게이션 텍스트 */
 .navigation span {
-  font-size: 16px; /* Adjusted font size */
-  margin: 0 10px;
+  font-size: 16px; /* 텍스트 크기 */
+  margin: 0 15px; /* 텍스트 양쪽에 여유 공간을 설정 */
 }
 
-/* Edit input styles */
-.edit-input {
-  border: 1px solid #ccc;
-  padding: 5px;
-  border-radius: 4px;
-  font-size: 14px;
-  margin-right: 10px;
-  flex: 1;
-}
-
+/* 할 일 수정 인풋 */
+.edit-input,
 .edit-textarea {
   border: 1px solid #ccc;
-  padding: 5px;
+  padding: 10px; /* 입력 칸의 여백을 통일 */
   border-radius: 4px;
   font-size: 14px;
-  width: 100%;
-  box-sizing: border-box;
-  min-height: 80px;
+  width: calc(100% - 22px); /* 너비를 부모 요소에 맞게 조정 */
+  box-sizing: border-box; /* 여백 및 테두리를 포함한 너비 조정 */
+  margin-bottom: 10px;
 }
 
-/* Button styles */
-.save-button,
-.cancel-button,
-.edit-button,
-.delete-button {
-  background-color: #007bff;
-  border: none;
-  color: white;
-  padding: 5px 10px;
-  font-size: 14px;
-  cursor: pointer;
-  border-radius: 4px;
+/* 할 일 수정 텍스트 영역 */
+.edit-textarea {
+  min-height: 80px; /* 최소 높이 설정 */
 }
 
-.cancel-button {
-  background-color: #dc3545; /* Red color for cancel */
-}
-
-.save-button {
-  background-color: #28a745; /* Green color for save */
-}
-
-.edit-button {
-  background-color: #007bff;
-}
-
-.delete-button {
-  background-color: #dc3545; /* Red color for delete */
+/* 비활성화된 버튼 스타일 */
+button:disabled {
+  background-color: #ccc; /* 비활성화된 버튼의 배경색 */
+  cursor: not-allowed; /* 커서 스타일 변경 */
+  color: #666; /* 비활성화된 버튼의 텍스트 색상 */
 }
