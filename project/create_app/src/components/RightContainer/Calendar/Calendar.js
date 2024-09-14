@@ -56,6 +56,12 @@ const MyCalendar = ({ events, setEvents, setTasks, setSelectedDate }) => {
     setShowPopup(true);
   };
 
+  const handleDateClick = (date) => {
+    setSelectedDateState(date);
+    setSelectedDate(date);
+    setShowPopup(true);
+  };
+
   const addEvent = (title, content) => {
     const newEvent = {
       id: Date.now(),
@@ -77,12 +83,12 @@ const MyCalendar = ({ events, setEvents, setTasks, setSelectedDate }) => {
   };
 
   return (
-    <div>
+    <div className="calendar-container">
       <BigCalendar
         localizer={localizer}
         events={events}
         defaultView={Views.MONTH}
-        style={{ height: 452, width: 478 }}
+        style={{ height: "100%", width: "100%" }} // 부모 컨테이너에 맞게 확장
         selectable
         onSelectSlot={handleSelectSlot}
         components={{
@@ -92,6 +98,9 @@ const MyCalendar = ({ events, setEvents, setTasks, setSelectedDate }) => {
               date={currentDate}
               onNavigate={handleNavigate}
             />
+          ),
+          dateCellWrapper: ({ children, value }) => (
+            <div onClick={() => handleDateClick(value)}>{children}</div>
           ),
         }}
         views={{ month: true }}
